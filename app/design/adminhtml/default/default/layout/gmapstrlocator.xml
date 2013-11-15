@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    
+    <gmapstrlocatoradmin_adminhtml_gmapstrlocator_index>
+        <reference name="content">
+            <block type="gmapstrlocator/adminhtml_gmapstrlocator" name="gmapstrlocator" />
+        </reference>
+    </gmapstrlocatoradmin_adminhtml_gmapstrlocator_index>
+    
+    
+    <gmapstrlocatoradmin_adminhtml_gmapstrlocator_edit>
+        <update handle="editor"/>
+    </gmapstrlocatoradmin_adminhtml_gmapstrlocator_edit>
+    
+    
+</layout>

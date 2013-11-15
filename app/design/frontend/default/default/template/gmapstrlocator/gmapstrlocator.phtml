@@ -1,0 +1,460 @@
+<?php
+$apikey_source = '';
+if(Mage::helper('gmapstrlocator')->getGMapAPIKey() != ''){
+	$apikey_source = 'http://maps.google.com/maps/api/js?key='.Mage::helper('gmapstrlocator')->getGMapAPIKey().'&sensor=true&libraries=geometry';
+}else{
+	$apikey_source = 'http://maps.google.com/maps/api/js?sensor=true&libraries=geometry';
+}
+?>
+<script type="text/javascript" src="<?php echo $apikey_source; ?>"></script>
+
+<?php
+	// Recupero tutti gli store nel DB
+    $Stores = $this->getAllStores();
+    // configuro dati iniziali
+    $standard_lat = Mage::helper('gmapstrlocator')->getGMapStandardLatitude();
+    $standard_long = Mage::helper('gmapstrlocator')->getGMapStandardLongitude();
+    
+    // GMap Marker Image
+    $gmap_marker_image = Mage::helper('gmapstrlocator')->getGMapMarkerSrc(); 
+    if(!Mage::helper('gmapstrlocator')->getGMapMarkerExist()): $gmap_marker_image = $this->getSkinUrl('images/gmapstrlocator/ib_icon.png'); endif;
+    
+    $gmap_marker_image_voisietequi = $this->getSkinUrl('images/gmapstrlocator/be_marker_verde_new.png');
+    
+    //Popup Primary BG Image
+    $popup_primary_image = Mage::helper('gmapstrlocator')->getGMapPopupBgprimarySrc();
+    if(Mage::helper('gmapstrlocator')->getGMapPopupBgprimaryExist()):
+?>
+    <style title="text/css"> .izi_map .popup .inner .map_popup_top1, .map_popup_top1 { background: url("<?php echo $popup_primary_image; ?>") !important; </style>
+<?php endif; ?>
+
+<?php
+    if(Mage::helper('gmapstrlocator')->getGMapPopupBgsecondaryExist()){
+		$popup_secondary_image = Mage::helper('gmapstrlocator')->getGMapPopupBgsecondarySrc();
+    }else{
+		$popup_secondary_image =  $this->getSkinUrl('images/gmapstrlocator/map_popup_bottom.png'); 
+    }
+?>
+	
+	
+		<div id="main" class="storelocator-page">		
+			<div class="grid_12" style="display:none;" id="no_result_trovati">
+				<strong>Nessun negozio per la ricerca desiderata</strong><br/><br/>
+			</div>
+			<div class="clearfix">
+			
+			<!-- GMap -->
+			<div id="map" class="grid_6">			    
+			<div id="map_canvas" style="height:400px;" ></div>
+			</div>
+			<!-- ./GMap -->
+			
+			<!-- Stores -->
+			<div id="stores" class="grid_6">			
+			    <div id="scrollbar1">
+				    <div class="scrollbar">
+				      <div class="track">
+					<div class="thumb">
+					  <div class="end"></div>
+					</div>
+				      </div>
+				    </div>
+				
+				    <div class="viewport">
+					<div class="overview"> 
+					    <div class="content" id="gmap-store-list">
+						    <!-- Table GMap -->
+						    <table id="myTable" class="tablesorter">
+							<thead>
+								<tr>
+								<th></th>
+								<th class="name">Nome negozio</th>
+								<th>Distanza</th>
+								<th class="prenota"></th>
+								</tr>
+							</thead>
+							<tbody id="tbody_storelocator">
+							<?php $i=0; foreach($Stores as $s_value): ?>
+						<?php (($i%2) == 0) ? $class = 'odd' : $class = ''; ?>
+							<tr class="<?php echo $class; ?>">
+							<td class="number"><strong><?php echo $i+1; ?></strong></td>
+							<td class="name"><a href="javascript: " onclick="showFromList('<?php echo $s_value['gmapstrlocator_id'] ?>');" ><?php echo $s_value['store_name']; ?></a></td>
+							<td class="distance"><p id="<?php echo 'store_list_distance_'.$i; ?>"></p></td>
+							<td class="prenota"><a class="button" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>appuntamento?id_negozio=<?php echo $s_value['gmapstrlocator_id'] ?>&mail_negozio=<?php echo $s_value['username']; ?>">PRENOTA</a></td>
+							</tr>
+						<?php  $i++; endforeach; ?>
+							</tbody>
+							</table>
+							<!-- ./Table GMap -->
+					    </div>
+					</div>
+				    </div>
+			    </div>
+			</div>		
+			</div>			
+		</div>   
+		<div id="control"></div>
+		
+<!-- Spot -->
+<div class="grid_12 storelocatorsep"></div>
+<div class="clearfix grid_12 bottom-spot">
+							<div class="grid_3 alpha prefix_1 spot">
+				        		<div>
+				        			Trova il tuo materasso e vieni a provarlo in negozio!
+				        			<a href="<?= $this->getBaseUrl(); ?>trova-prova-compra" class=""><img src="<?php echo $this->getSkinUrl('images/default/trova-prova-compra.png') ?>"></a>
+				        			<a href="<?= $this->getBaseUrl(); ?>trova-prova-compra" class="button scopricome">Scopri come!</a>
+				        		</div>
+				        	</div>
+				        	
+				        	<div class="grid_3 prefix_1 spot">
+				        		<div>
+					        		Se compri in negozio, alla consegna ritireremo il tuo usato!
+					        		<a href="<?= $this->getBaseUrl(); ?>ritiro-materassi" class=""><img src="<?php echo $this->getSkinUrl('images/default/ritiro-usato.png') ?>"></a>
+					        		<a href="<?= $this->getBaseUrl(); ?>ritiro-materassi" class="button scopricome">Scopri come!</a>
+				        		</div>
+				        	</div>
+				        	
+				        	<div class="grid_3 omega prefix_1 spot">
+				        		<div>
+					        		Scarica il volantino con le migliori offerte dei nostri negozi!
+					        		<a href="<?= $this->getBaseUrl(); ?>offerte" class=""><img src="<?php echo $this->getSkinUrl('images/default/scarica-volantino.png') ?>"></a>
+					        		<a href="<?= $this->getBaseUrl(); ?>offerte" class="button scopricome">Scopri come!</a>
+				        		</div>
+				        	</div>
+</div>	
+<!-- ./Spot -->	
+
+<!-- STORE LOCATOR -->
+<script type="text/javascript">
+	// Var globali
+	var map, i, j;
+	var icon_markerVoiSieteQui = '<?php echo $gmap_marker_image_voisietequi; ?>';
+	var icon_markerNegozi = '<?php echo $gmap_marker_image; ?>';
+	var geocoder = new google.maps.Geocoder();
+	var posizione_client = null;
+	
+	// Oggetto storelocator
+	var SL = {
+		// Variabili
+		storesJson: <?php echo json_encode($Stores); ?>,
+		stores: [],
+		id_stores_distances: [],
+		markers: [],
+		infoWindows: [],
+		markerVoiSieteQui: null,
+		
+		// Funzione init()
+		init: function() {
+			this.mapInit();
+			this.loadData();
+			
+			var h = this.readHash();
+			if(h == 1) {
+				jQuery("#searchMap").val(unescape(h));
+				jQuery("#search_by_zipcode_address_btn").click();
+				searchStoreCtrl('ok');
+				
+			}else{
+				posizione_client = this.getPosizioneClient();
+			}
+			
+			
+			
+		},
+		calcoloDistanze: function(posizione_partenza){
+			// ricavo distanze, confronto range e trovo i risultati
+			for (var i = 0; i < SL.markers.length; i++) {
+				var d = SL.getDistanzaAPI(posizione_partenza, SL.markers[i].position);
+				// creo array dei risultati
+				SL.id_stores_distances[i] = {
+					distanza : d,
+					id : i, // id dello STORE
+					nome: SL.markers[i].title,
+				}
+			}
+			
+			// Riordino dei risultati in base alla distanza
+			SL.id_stores_distances.sort(function(a, b){
+				return a.distanza-b.distanza
+			});
+		},
+		getDistanzaAPI: function(A,B){
+			return Math.round(google.maps.geometry.spherical.computeDistanceBetween(A, B) / 1000);
+		},
+		getPosizioneClient: function(){
+			// Recupero posizione da geolocalizzazione altrimenti li setto quella di Pistoia (lat:43.911654 ; LNG:10.992901)
+			var p_foo = new google.maps.LatLng('43.911654','10.992901');
+			if(navigator.geolocation){ // Controllo se disponibile la geolocalizzazione HTML5
+				navigator.geolocation.getCurrentPosition(function(position){
+					p_foo = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+					SL.calcoloDistanze(p_foo); // Calcolo le distanze
+					SL.stampoTabella();
+					SL.gestioneMarkerVoiSieteQui(p_foo);
+					
+				});
+			}
+		},
+		creaMarkerVoiSieteQui: function(posizione){
+			var marker = new google.maps.Marker({
+		        position: posizione,
+		        map: map,
+		        icon: icon_markerVoiSieteQui,
+		        title: 'Voi siete qui',
+	        });
+	        return marker;
+		},
+		stampoTabella: function(){
+			jQuery('#tbody_storelocator').html(''); // Azzero tabella
+			
+			var foo = null;
+			if(SL.id_stores_distances.length > 0){
+				for (var i = 0; i < SL.id_stores_distances.length; i++) {
+					if(SL.markers[i].getVisible() == true){
+						foo = null;
+						var ni = i+1;
+						var idd = SL.id_stores_distances[i].id;
+						
+						var bk = (i % 2  == 0) ? 'odd' : ''; // Per lo sfondo delle righe
+						
+						foo = '<tr class="'+bk+'"><td class="number"><strong>'+ni+'</strong></td><td class="name"><a href="#" data-idstore="'+idd+'" class="nome_store">'+SL.id_stores_distances[i].nome+'</a></td><td class="distance">'+SL.id_stores_distances[i].distanza+' km</td><td class="prenota"><a class="button" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>appuntamento?id_negozio='+SL.storesJson[idd].gmapstrlocator_id+'&mail_negozio='+SL.storesJson[idd].username+'">PRENOTA</a></td></tr>';
+						jQuery('#tbody_storelocator').append(foo);
+					}
+				}
+			}	
+			
+			jQuery('.nome_store').bind('click',function(){
+				event.preventDefault();
+				var idstore = jQuery(this).attr('data-idstore');
+				map.setCenter(SL.markers[idstore].position);
+				map.setZoom(11);
+				SL.markers[idstore].setAnimation(google.maps.Animation.BOUNCE);
+				SL.infoWindows[idstore].open(map,SL.markers[idstore]);			
+			});		
+			
+		},
+		// Funzione inizializzazioneMappa
+		mapInit: function() {
+			var mapOptions = {
+	          center: new google.maps.LatLng(43, 13),
+	          zoom: 6,
+	          mapTypeId: google.maps.MapTypeId.ROADMAP,
+	          streetViewControl: false,
+	          zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL}
+	        };
+	        // Init della mappa
+	        map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);             
+		},
+		
+		// Funzione caricamento dati iniziali
+		loadData: function(){
+			jQuery.each(this.storesJson, function(i){
+			  		SL.stores[i] = this;
+			  		SL.markers[i] = SL.creaMarker(this);
+			  		SL.infoWindows[i] = SL.creaInfo(this);
+
+			  		// Associo evento al click per questo marker
+					google.maps.event.addListener(SL.markers[i], "click", function (e) {
+						SL.infoWindows[i].open(map,SL.markers[i]);
+						if (SL.markers[i].getAnimation() != null)
+						    SL.markers[i].setAnimation(null);
+						else
+						    SL.markers[i].setAnimation(google.maps.Animation.BOUNCE);
+					});
+					
+					// Associo evento al closeclick per questa infobox
+					google.maps.event.addListener(SL.infoWindows[i], "closeclick", function (e) {
+							SL.markers[i].setAnimation(null);
+					});
+			 });
+		},
+		
+		// Funzione creaMarker
+		creaMarker: function(store_json){
+			var myLatLng = new google.maps.LatLng(store_json.latitude, store_json.longitude);
+			var marker = new google.maps.Marker({
+		        position: myLatLng,
+		        map: map,
+		        icon: icon_markerNegozi,
+		        title: store_json.store_name,
+	        });
+	        return marker;
+		},
+		
+		creaInfo: function(store_json){
+			var box;
+			box = '<h1 style="color:red;"><strong>'+store_json.store_name+'</strong></h1>';
+			box += '<em style="font-size: 12px;">'+store_json.store_description+'</em><br/>';
+			box += '<strong>Contatti</strong>';
+			box += '<address style="font-size: 13px;">'+store_json.address+' '+store_json.postal_code+'<br/>'+store_json.district+' - '+store_json.district+'<br/><br/><abbr title="Telefono">Tel:</abbr>'+store_json.store_phone+'<abbr title="Fax">Fax:</abbr>'+store_json.store_fax+'</address>';
+
+			var infobox = new google.maps.InfoWindow({
+	        	content: box
+	        });
+	        return infobox;
+		},
+		cercaIndirizzo: function(indirizzo){
+			SL.mostraNascondiMarker(true); // riattivo TUTTI i marker nel caso avessi cercato prima un prodotto 
+			
+			var ne = new google.maps.LatLng(36.50, 6.50);
+			var sw = new google.maps.LatLng(48.00, 19.00);
+			var limite_ricerca = new google.maps.LatLngBounds(sw, ne);
+			
+			geocoder.geocode({ 
+				'address': indirizzo,
+				'region':   'IT',
+				'bounds':  limite_ricerca
+			}, function(results, status) {
+			  if (status == google.maps.GeocoderStatus.OK) {
+			  	if (results[0].geometry.bounds) {
+			  		SL.calcoloDistanze(results[0].geometry.location);
+			  		SL.stampoTabella();
+			  		SL.gestioneMarkerVoiSieteQui(results[0].geometry.location);
+			  	}			    
+			  }else if(status == google.maps.GeocoderStatus.ZERO_RESULTS){
+				  jQuery('#no_result_trovati').show();
+			  }
+			  
+			});
+		},
+		gestioneMarkerVoiSieteQui: function(location){
+			if(SL.markerVoiSieteQui != null)
+				SL.markerVoiSieteQui.setMap(null);
+			// Centro la mappa secondo la geolocalizzazione e stampa markerVoiSieteQUI
+			SL.markerVoiSieteQui = SL.creaMarkerVoiSieteQui(location);
+			map.setCenter(location);
+			
+			// mi serve per zommare dinamicamente la mappa
+			var circleOptions = {
+			    center: SL.markerVoiSieteQui.position,
+			    fillOpacity: 0,
+			    strokeOpacity:0,
+			    map: map,
+			    radius: SL.id_stores_distances[0].distanza*1000 /* 20 km */
+		    }
+		    var myCircle = new google.maps.Circle(circleOptions);
+		    map.fitBounds(myCircle.getBounds());
+		},
+		cercaProdotto: function(prodotto){
+			// Cancello distanze dlala tabella
+			jQuery('.distance').html('');
+			// nascondo tutti i marker
+			SL.mostraNascondiMarker(false);
+			jQuery.ajax({
+				type: "POST",
+				url: "<?php echo $this->getUrl('gmapstrlocator/index/searchprod'); ?>",
+				data: { query_string: prodotto },
+				dataType: "json",
+				success: function(data) {
+					if(data.length > 0){
+						jQuery.each(data, function(i){
+							item = this;
+							// Rendo visibili i marker per i negozi che hanno il prodotto
+							jQuery.each(SL.storesJson, function(j,item){
+								if(this.gmapstrlocator_id == item.gmapstrlocator_id)
+									SL.markers[j].setVisible(true);
+							});
+						});
+					}else{
+						jQuery('#no_result_trovati').show();
+					}
+					
+					SL.markerVoiSieteQui.setMap(null);
+					map.setZoom(5);	
+				}
+			   
+		    });
+		},
+		cercaTutto: function(prodotto,indirizzo){
+			SL.mostraNascondiMarker(false);
+			jQuery.ajax({
+				type: "POST",
+				url: "<?php echo $this->getUrl('gmapstrlocator/index/searchprod'); ?>",
+				data: { query_string: prodotto },
+				dataType: "json",
+				success: function(data) {
+					if(data.length > 0){
+						jQuery.each(data, function(i){
+							item = this;
+							// Rendo visibili i marker per i negozi che hanno il prodotto
+							jQuery.each(SL.storesJson, function(j,item){
+								if(this.gmapstrlocator_id == item.gmapstrlocator_id)
+									SL.markers[j].setVisible(true);
+							});
+						});
+					}else{
+						jQuery('#no_result_trovati').show();
+					}
+					
+					SL.cercaIndirizzo(indirizzo);
+				}
+			   
+		    });
+		},
+		mostraNascondiMarker: function(stato){
+			for (var i = 0; i < SL.markers.length; i++) {
+				SL.markers[i].setVisible(stato);
+			}
+		},
+		readHash: function() {
+			var url = String(window.location);
+			var arr = url.split("?");
+			var token = null;
+			var token2 = null;
+			if(arr.length > 1){
+				/* search_multiple=AAAA&prod_search_item=AAAA&prod_search=&cerca= */
+				token = arr[1].split("&");
+				token2 = token[0].split("=");
+				switch (token2[0]){
+					case 'indirizzo':
+						jQuery('#search_multiple').val(token2[1]);
+					break;
+					case 'prodotto':
+						jQuery('.selecter span.selecter-selected').html(token01[1].replace('+', ' '));
+						jQuery('#prod_search').val(token01[1].replace('+', ' '));
+					break;
+					case 'search_multiple':
+						if(token2[1] == ''){ // non ho elementi forse cercavo solo prodotto
+							var token01 = token[1].split('=');
+							if(token01[0] == 'prod_search_item'){
+								jQuery('#prod_search').val(token01[1].replace('+', ' '));
+								jQuery('.selecter span.selecter-selected').html(token01[1].replace('+', ' '));
+							}
+						}else{
+							if(!isNaN(token2[1])){
+									jQuery('#search_multiple').val(token2[1]);
+							}else{
+									jQuery('#search_multiple').val(token2[1]);
+							}
+							var token01 = token[1].split('=');
+							if(token01[0] == 'prod_search_item'){
+								jQuery('.selecter span.selecter-selected').html(token01[1].replace('+', ' '));
+								jQuery('#prod_search').val(token01[1].replace('+', ' '));
+							}
+						}
+					break;
+				}
+				return 1;
+			}else{
+				return 0;
+			}
+		}
+	};
+	
+	function searchStoreCtrl(value){
+		if(jQuery('#search_multiple').val() != '' && jQuery('#prod_search').val() == '')
+			SL.cercaIndirizzo(jQuery('#search_multiple').val());
+		else if(jQuery('prod_search').val() != '' && jQuery('#search_multiple').val() == '')
+			SL.cercaProdotto(jQuery('#prod_search').val());
+		else if(jQuery('prod_search').val() != '' && jQuery('#search_multiple').val() != '')
+			SL.cercaTutto(jQuery('#prod_search').val(),jQuery('#search_multiple').val());
+		else
+			jQuery('#no_result_trovati').show();
+	}
+	
+	// Lancio storelocator e tinyscrollbar
+	jQuery(document).ready(function(){
+		SL.init(); // Inizializzazione storelocator
+	});
+</script>
+<!-- ./STORE LOCATOR -->
+

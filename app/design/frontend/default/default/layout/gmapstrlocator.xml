@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    
+    <default>
+        
+        <reference name="top.links">
+            <action method="addLink" translate="label title" module="gmapstrlocator" ifconfig="gmapstrlocator/manage_links/header_enable" ifvalue="1">
+                <label helper="gmapstrlocator/getHeaderLinkLabel" /><url helper="gmapstrlocator/getStoreLocatorPageUrl" /><title helper="gmapstrlocator/getHeaderLinkLabel" /><prepare/><urlParams/>
+            </action>
+        </reference>
+        
+        <reference name="footer_links">
+	    <action method="addLink" translate="label title" module="gmapstrlocator" ifconfig="gmapstrlocator/manage_links/footer_enable" ifvalue="1" >
+                <label helper="gmapstrlocator/getFooterLinkLabel" /><url helper="gmapstrlocator/getStoreLocatorPageUrl" /><title helper="gmapstrlocator/getFooterLinkLabel"/><prepare/><urlParams/>
+            </action>
+	</reference>        
+        
+    </default>
+    
+    <gmapstrlocator_index_index>
+        
+        <reference name="head">            
+            <action method="addCss"><stylesheet>css/gmapstrlocator/gmapstrlocator.css</stylesheet></action>
+            <action method="addJs"><script>gmapstrlocator/jquery.js</script></action>
+            <action method="addJs"><script>gmapstrlocator/ui/jquery.ui.map.js</script></action>
+            <action method="addJs"><script>gmapstrlocator/ui/jquery.ui.map.overlays.js</script></action>
+            <action method="addJs"><script>gmapstrlocator/ui/jquery.ui.map.extensions.js</script></action>
+        </reference>
+        
+        <reference name="root">
+            <action method="setTemplate"><template helper="gmapstrlocator/getGMapLayoutupdate"/></action>
+	</reference>
+        
+        <reference name="content">
+            <block type="gmapstrlocator/gmapstrlocator" name="gmapstrlocator" template="gmapstrlocator/gmapstrlocator.phtml" />
+        </reference>
+        
+    </gmapstrlocator_index_index>
+    
+    
+    
+    
+</layout> 

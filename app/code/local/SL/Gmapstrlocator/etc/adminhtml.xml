@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : adminhtml.xml
+    Created on : June 12, 2012, 2:36 PM
+    Author     : Asif Hussain
+    Description:
+        Purpose of the document follows.
+-->
+
+<config>
+    
+    <menu>
+		    <FME module="gmapstrlocator">
+			<title>StoreLocator</title>
+			<sort_order>71</sort_order>
+			<children>
+			    <gmapstrlocator module="gmapstrlocator">
+				    <title>StoreLocator GoogleMaps</title>
+				    <sort_order>71</sort_order>
+				    <children>
+					   <items module="gmapstrlocator">
+					    	    <title>Manage Stores</title>
+						    <sort_order>0</sort_order>
+						    <action>gmapstrlocatoradmin/adminhtml_gmapstrlocator</action>
+					    </items>
+					    <config translate="title" module="gmapstrlocator">
+						    <title>Configuration</title>
+						    <sort_order>1</sort_order>
+						    <action>adminhtml/system_config/edit/section/gmapstrlocator</action>
+					    </config>
+				    </children>
+			    </gmapstrlocator>
+			</children>
+		    </FME>
+    </menu>
+    
+    
+    
+    
+    
+    <acl>
+			<resources>
+			    	<all>
+				    	<title>Allow Everything</title>
+				</all>
+				<admin>
+				    	<children>
+					    <FME module="gmapstrlocator">
+						<title>StoreLocator</title>
+						<sort_order>71</sort_order>
+						<children>
+						    <gmapstrlocator>
+							    <title>StoreLocator GoogleMaps</title>
+							    <children>
+								    <items module="gmapstrlocator">
+									    <title>Manage Stores</title>
+								    </items>
+								    <config translate="title">
+									    <title>Configuration</title>
+								    </config>							    
+							    </children>
+							    <sort_order>10</sort_order>
+						    </gmapstrlocator>
+						</children>
+					    </FME>
+					    
+						<system>
+						    <children>
+							<config>
+							    <children>
+								<gmapstrlocator translate="title" module="gmapstrlocator">
+								    <title>StoreLocator GoogleMaps Section</title>
+								    <sort_order>39</sort_order>
+								</gmapstrlocator>
+							    </children>
+							</config>
+						    </children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+    </acl>
+    
+    
+
+</config>

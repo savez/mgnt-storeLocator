@@ -1,0 +1,346 @@
+<?xml version="1.0"?>
+
+<config>
+    <tabs>
+        <SL translate="label" module="gmapstrlocator">
+            <label>StoreLocator</label>
+            <sort_order>170</sort_order>
+        </SL>
+    </tabs>
+    <sections>
+	    
+	    <gmapstrlocator  translate="label comment" module="gmapstrlocator">
+		<tab>FME</tab>
+		<label>StoreLocator GoogleMaps</label>
+		<frontend_type>text</frontend_type>
+		<sort_order>200</sort_order>
+		<show_in_default>1</show_in_default>
+		<show_in_website>1</show_in_website>
+		<show_in_store>1</show_in_store>
+		<groups>
+		    
+		     <general translate="label comment" module="gmapstrlocator">
+			    <label>General Settings</label>
+			    <frontend_type>text</frontend_type>
+			    <sort_order>20</sort_order>
+			    <show_in_default>1</show_in_default>
+			    <show_in_website>1</show_in_website>
+			    <show_in_store>1</show_in_store>
+			    <fields>
+				<page_title translate="label">
+				    <label>Page Title</label>
+				    <frontend_type>text</frontend_type>
+				    <sort_order>0</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>
+				    <comment></comment>
+				</page_title>
+				<identifier translate="label">
+					<label>SEF URL Identifier</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>1</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment>(eg: domain.com/identifier)</comment>
+				</identifier>
+				<meta_keywords translate="label">
+					<label>META Keywords</label>
+					<frontend_type>textarea</frontend_type>
+					<sort_order>2</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment></comment>
+				</meta_keywords>
+				<meta_description translate="label">
+					<label>META Description</label>
+					<frontend_type>textarea</frontend_type>
+					<sort_order>3</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment></comment>
+				</meta_description>								
+				<page_heading translate="label">
+					<label>Page Heading</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>4</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment>Main heading of the GMap store locator page</comment>				    
+				</page_heading>
+				<page_subheading translate="label">
+					<label>Page Sub Heading</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>5</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment>Sub heading of the GMap store locator page</comment>				    
+				</page_subheading>
+				
+				<standard_lat translate="label">
+					<label>Standard Latitude</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>6</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment></comment>
+				</standard_lat>				
+				<standard_long translate="label">
+					<label>Standard Longitude</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>7</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment></comment>
+				</standard_long>
+				<api_key translate="label">
+					<label>API Key</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>8</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment>Google Maps API Key (v3)</comment>
+				</api_key>
+				<zip_nearest translate="label">
+				    <label>Show the Nearest Store on Zip/Postal Code search</label>
+				    <frontend_type>select</frontend_type>
+				    <source_model>adminhtml/system_config_source_yesno</source_model>
+				    <sort_order>50</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>    
+				</zip_nearest>
+				<address_nearest translate="label">
+				    <label>Show the Nearest Store on Address search</label>
+				    <frontend_type>select</frontend_type>
+				    <source_model>adminhtml/system_config_source_yesno</source_model>
+				    <sort_order>60</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>    
+				</address_nearest>
+			    </fields>
+		     </general>
+		     
+		     <info_popup translate="label comment" module="gmapstrlocator">
+			    <label>G - Map Settings</label>
+			    <frontend_type>text</frontend_type>
+			    <sort_order>21</sort_order>
+			    <show_in_default>1</show_in_default>
+			    <show_in_website>1</show_in_website>
+			    <show_in_store>1</show_in_store>
+			    <fields>
+				<button_text translate="label">
+				    <label>Get Direction Button Text</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>0</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment>Text for button of Get Direction</comment>				    
+				</button_text>
+				
+				<marker_image translate="label">
+				    <label>Map Marker</label>
+				    <frontend_type>image</frontend_type>
+				    <backend_model>gmapstrlocator/system_config_backend_image_marker</backend_model>
+				    <base_url type="media" scope_info="1">gmapstrlocator/marker</base_url>
+				    <sort_order>1</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>
+				    <comment>Allowed file types: ICO, PNG, GIF, JPEG, APNG, SVG. Not all browsers support all these formats!</comment>
+				</marker_image>
+				
+				<bg_primary_image translate="label">
+				    <label>Marker Popup Background Primary Image</label>
+				    <frontend_type>image</frontend_type>
+				    <backend_model>gmapstrlocator/system_config_backend_image_bgprimary</backend_model>
+				    <base_url type="media" scope_info="1">gmapstrlocator/bgprimary</base_url>
+				    <sort_order>2</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>
+				    <comment>Allowed file types: ICO, PNG, GIF, JPEG, APNG, SVG. Not all browsers support all these formats!</comment>
+				</bg_primary_image>
+				
+				<bg_secondary_image translate="label">
+				    <label>Marker Popup Background Secondary Image</label>
+				    <frontend_type>image</frontend_type>
+				    <backend_model>gmapstrlocator/system_config_backend_image_bgsecondary</backend_model>
+				    <base_url type="media" scope_info="1">gmapstrlocator/bgsecondary</base_url>
+				    <sort_order>3</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>
+				    <comment>Allowed file types: ICO, PNG, GIF, JPEG, APNG, SVG. Not all browsers support all these formats!</comment>
+				</bg_secondary_image>
+				
+				<map_zoom translate="label">
+				    <label>Map Zoom</label>
+				    <frontend_type>text</frontend_type>
+				    <sort_order>4</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>
+				    <comment>Enter digit to set map zoom. i.e( 6, 8, 11)</comment>
+				</map_zoom>
+				
+			    </fields>
+		     </info_popup>
+		     
+		     <manage_search translate="label comment" module="gmapstrlocator">
+			    <label>Manage Search</label>
+			    <frontend_type>text</frontend_type>
+			    <sort_order>22</sort_order>
+			    <show_in_default>1</show_in_default>
+			    <show_in_website>1</show_in_website>
+			    <show_in_store>1</show_in_store>
+			    <fields>
+				<product translate="label">
+				    <label>Enable Search By Product</label>
+				    <frontend_type>select</frontend_type>
+				    <source_model>adminhtml/system_config_source_yesno</source_model>
+				    <sort_order>0</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>
+				    <comment>Enable Store search by products</comment>
+				</product>
+				<zipcode translate="label">
+				    <label>Enable Search By Zipcode</label>
+				    <frontend_type>select</frontend_type>
+				    <source_model>adminhtml/system_config_source_yesno</source_model>
+				    <sort_order>1</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>
+				    <comment>Enable Store search by address</comment>
+				</zipcode>
+				<address translate="label">
+				    <label>Enable Search By Address, State</label>
+				    <frontend_type>select</frontend_type>
+				    <source_model>adminhtml/system_config_source_yesno</source_model>
+				    <sort_order>2</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>
+				    <comment>Enable Store search by address/state</comment>
+				</address>
+				<store_select translate="label">
+				    <label>Enable Select Stores</label>
+				    <frontend_type>select</frontend_type>
+				    <source_model>adminhtml/system_config_source_yesno</source_model>
+				    <sort_order>3</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>
+				    <comment>Enable Store select field</comment>
+				</store_select>
+			    </fields>
+		     </manage_search>
+		     
+		     <manage_links translate="label comment" module="gmapstrlocator">
+			    <label>Manage Links</label>
+			    <frontend_type>text</frontend_type>
+			    <sort_order>23</sort_order>
+			    <show_in_default>1</show_in_default>
+			    <show_in_website>1</show_in_website>
+			    <show_in_store>1</show_in_store>
+			    <fields>
+				<header_enable translate="label">
+				    <label>Enable Header Link</label>
+				    <frontend_type>select</frontend_type>
+				    <source_model>adminhtml/system_config_source_yesno</source_model>
+				    <sort_order>0</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>    
+				</header_enable>
+				<header_text translate="label">
+				    <label>Header Link Label</label>
+				    <frontend_type>text</frontend_type>
+				    <sort_order>1</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>
+				    <comment>Label/Title for header link</comment>
+				</header_text>
+				<footer_enable translate="label">
+				    <label>Enable Footer Link</label>
+				    <frontend_type>select</frontend_type>
+				    <source_model>adminhtml/system_config_source_yesno</source_model>
+				    <sort_order>2</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>    
+				</footer_enable>
+				<footer_text translate="label">
+				    <label>Footer Link Label</label>
+				    <frontend_type>text</frontend_type>
+				    <sort_order>3</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>    
+				    <comment>Label/Title for footer link</comment>
+				</footer_text>
+			    </fields>
+		     </manage_links>
+		     
+		     
+		     <layout_update translate="label comment" module="gmapstrlocator">
+			    <label>Layout Settings</label>
+			    <frontend_type>text</frontend_type>
+			    <sort_order>24</sort_order>
+			    <show_in_default>1</show_in_default>
+			    <show_in_website>1</show_in_website>
+			    <show_in_store>1</show_in_store>
+			    <fields>
+				<page_column translate="label">
+				    <label>Select Layout</label>
+				    <frontend_type>select</frontend_type>
+				    <source_model>gmapstrlocator/system_config_source_layoutupdate</source_model>
+				    <sort_order>0</sort_order>
+				    <show_in_default>1</show_in_default>
+				    <show_in_website>1</show_in_website>
+				    <show_in_store>1</show_in_store>    
+				</page_column>				
+			    </fields>
+		     </layout_update>
+		     
+		     <seo translate="label comment" module="gmapstrlocator">
+			    <label>Search Engine Optimizations</label>
+			    <frontend_type>text</frontend_type>
+			    <sort_order>25</sort_order>
+			    <show_in_default>1</show_in_default>
+			    <show_in_website>1</show_in_website>
+			    <show_in_store>1</show_in_store>
+			    <fields>
+			        <url_suffix translate="label">
+                        	<label>URL Suffix</label>
+                        	<frontend_type>text</frontend_type>
+                        	<sort_order>0</sort_order>
+				<show_in_default>1</show_in_default>
+				<show_in_website>1</show_in_website>
+				<show_in_store>1</show_in_store>
+				<comment>(eg: .html)</comment>
+				</url_suffix>
+			    </fields>
+		    </seo>
+		    
+		
+		
+		</groups>
+	    </gmapstrlocator>
+	    
+    
+    </sections>
+</config>
